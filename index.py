@@ -21,7 +21,7 @@ def constructGraph(vertex,edges):
     
     for i in range(vertex):
         plt.annotate(
-            str(i),
+            "P"+str(i),
             xy=(x[i] , y[i]), xycoords='data',
             xytext=(15, 25), textcoords='offset points',
             )
@@ -55,11 +55,20 @@ def edgeConverter(adj):
             edges.append((i,j))
     
     return edges
-        
+
+#function of converting adjacent matrix into edges
+def MatrixToedge(n,matrix):
+    edges= []
+    for i in range(n):
+        for j in range(n):
+            if(matrix[i][j] == 1):
+                edges.append((i,j))
+    
+    return edges
 # driver functiions
 edges=[]
 vertex= int(input("Enter no of vertex  "))
-mode=int(input("Enter the mode of graph representation \n For direct pair method press 0 \n For adjaceny list press 1\n"))
+mode=int(input("Enter the mode of graph representation \n For direct pair method press 0  \n For adjaceny list press 1\n For adjaceny Matrix press 2\n"))
 
 if( mode == 0):
     NoEdge =int(input("Enter no of edges:  "))
@@ -80,6 +89,27 @@ elif( mode == 1):
     
     edges = edgeConverter(adj)
     constructGraph(vertex,edges)
+
+elif(mode == 2):
+    matrix= []
+    # NoEdge =int(input("Enter no of edges:  "))
+    for i in range(vertex):
+        print(f"Enter the matrix row for  {i} of {vertex} numbers:  ")
+        a = list(map(int,input().strip().split()))
+        if(len(a) != vertex):
+            print("Enter valid input")
+            break
+            
+        else:
+            matrix.append(a)
+    
+    if(len(matrix) != vertex):
+        print("please enter valid input")
+        
+    else:
+
+        edges=MatrixToedge(vertex,matrix)
+        constructGraph(vertex,edges)
 
 else:
     print ("Enter a valid input")
